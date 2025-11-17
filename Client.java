@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PipedReader;
 import java.io.PrintWriter;
@@ -24,14 +25,37 @@ public class Client
 		}
 
 	}
+	
+	public void ecouterServeur()
+	{
+		try
+		{
+			while (true)
+			{
+				String messageRecu = this.in.read();
+				System.out.println("messageRecu : " + messageRecu);
+			}
+		}
+		catch (IOException | InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+	}
 
 	public void ClientLogic()
 	{
 		System.out.println(this.nom + "est connecté au chat");
 		while (true)
 		{
-			String msg = in.read();
-			out.println(msg);
+			try
+			{
+				String msg = in.read();
+				out.write(msg);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 
